@@ -5,7 +5,6 @@ class TreeNode(object):
         self.parent = None
         self.children = []
         self.data = None #GameState object
-        self.visited = False
         self.score = 0
         self.depth = 0
         
