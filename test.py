@@ -1,13 +1,41 @@
 from minimax import Minimax
 from tree import Tree
 from tictactoe import TicTacToe
+from copy import deepcopy
 
-game = TicTacToe()
-game.startState = ['X','O', 'X', -1, 'X', -1, -1, 'O', -1]
-game.setupTree()
-num = game.tree.walk(0, game.tree.root)
-print(num)
+#game = TicTacToe()
+#game.startState = ['X','O', 'X', -1, 'X', -1, -1, 'O', -1]
+#game.setupTree()
+#num = game.tree.walk(0, game.tree.root)
+#print(num)
 
+
+startState = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+tree = Tree()
+tree.root.data = startState
+def constructTree():
+   def recurse(node):
+      state = deepcopy(node.data)
+      numFreeSpots = len([k for k in state if k == -1])
+      indices = []
+      for i in range(len(state)):
+         if state[i] == -1:
+            indices.append(i)
+      for index in indices:
+         newstate = deepcopy(state)
+         if (numFreeSpots % 2) == 0:
+            newstate[index] = 'X'
+         else:
+            newstate[index] = 'O'
+         newnode = tree.addNode(node, newstate)
+         recurse(newnode)
+           
+   recurse(tree.root)
+
+
+constructTree()
+n = tree.walk(0, tree.root)
+print(n)
 """
 tree = Tree()
 tree.addNode(tree.root, 9)

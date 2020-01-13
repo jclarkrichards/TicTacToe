@@ -57,13 +57,13 @@ class Tree(object):
         '''Walk through the tree and print out all of the nodes, print leaves first'''
         if len(node.children) == 0:
             num += 1
-            print("L: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
-            print(node.data)
+            #print("L: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
+            #print(node.data)
         else:
             for n in node.children:
                 num = self.walk(num, n)
-            print("N: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
-            print(node.data)
+            #print("N: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
+            #print(node.data)
 
         return num
     
