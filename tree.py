@@ -6,6 +6,8 @@ class TreeNode(object):
         self.children = []
         self.data = None #GameState object
         self.visited = False
+        self.score = 0
+        self.depth = 0
         
     def __repr__(self):
         return "Node: " + str(self.id)
@@ -50,6 +52,7 @@ class Tree(object):
         node.parent = parent
         numchildren = len(parent.children)
         node.id.append(numchildren)
+        node.depth = len(node.id)-1
         parent.children.append(node)
         return node
     
@@ -57,14 +60,17 @@ class Tree(object):
         '''Walk through the tree and print out all of the nodes, print leaves first'''
         if len(node.children) == 0:
             num += 1
-            #print("L: " + str(node))
-            #print(node.data)
+            print("L: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
+            print(node.data)
         else:
             for n in node.children:
                 num = self.walk(num, n)
-            #print("N: " + str(node))
-            #print(node.data)
+            print("N: " + str(node) + " depth: " + str(node.depth) + " score: " + str(node.score))
+            print(node.data)
+
         return num
+
+    
 
     
     #This will most likely be deleted.  Just for testing...
@@ -135,6 +141,7 @@ class Tree(object):
         '''Prune the tree so that nodes with a 3-in-a-row have no children'''
         if node.data.isEndState(filters):
             node.children = []  #empty the children
+            node.data.setWinner(filters)
         else:
             for n in node.children:
                 self.prune(n, filters)
@@ -145,8 +152,28 @@ class Tree(object):
         if node is not None:
             self.root = node
             self.root.parent = None
+            self.decreaseDepth()
+            
+    def decreaseDepth(self):
+        '''Go through tree and set the depth of all nodes to 1 less than previous'''
+        def recurse(node):
+            node.depth -= 1
+            for childNode in node.children:
+                recurse(childNode)
+        recurse(self.root)
+        
 
     #set root with data as well instead of id
+    def checkWinners(self, node, wins, symbol):
+        if len(node.children) == 0:
+            if node.data.winner == symbol:
+                wins[node.depth] += 1
+        else:
+            for n in node.children:
+                wins= self.checkWinners(n, wins, symbol)
+
+        return wins
+        
 """
 #Testing the tree
 print("Tree testing")

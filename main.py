@@ -1,42 +1,76 @@
 from tictactoe import TicTacToe, filters
 from state import GameState
 from tree import Tree
+from minimax import Minimax
 
 game = TicTacToe()
-game.setupTree()
+#game.setupTree()
 #game.checkChildScores()
 
-print("Depth of root: " + str(game.tree.root.data.depth))
-node = game.tree.findNode([0,1,0,1,2,0])
-print("Depth of this node " + str(node.data.depth))
+#print("Depth of root: " + str(game.tree.root.depth))
+#node = game.tree.findNode([0,1,0,1,2,0])
+#print("Depth of this node " + str(node.depth))
 
 game.xplayer = True #Human is X
-game.oplayer = True #Human is O
+game.oplayer = False #Human is O
+#print("Wins for X")
+#wins = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+#wins= game.tree.checkWinners(game.tree.root, wins, 'X')
+#for key in wins.keys():
+#    print("Depth " + str(key) + " : " + str(wins[key]))
+#print("Wins for O")
+#wins = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+#wins= game.tree.checkWinners(game.tree.root, wins, 'O')
+#for key in wins.keys():
+#    print("Depth " + str(key) + " : " + str(wins[key]))
+    
+#print("X: "+ str(xwin) +", O: " + str(owin) + ", NONE: " + str(nowin))
+#print("===============================")
+
+firstTurn = True
 
 while not game.gameover:
     print("")
     print(game.template)
     print("=======")
-    print(game.tree.root.data)
     if game.xturn:
+        print("X PLAYER")
         if game.xplayer:
-            game.humanTurn('X')
+            if firstTurn:
+                index = game.humanFirstTurn()
+                game.startState[index] = 'X'
+                game.setupTree()
+            else:
+                game.humanTurn('X')
             #game.checkChildScores()
         else:
-            pass
+            if firstTurn:
+                index = 4
+                game.startState[index] = 'X'
+                game.setupTree()
+            else:
+                minimax = Minimax(game.tree)
+                index = minimax.findBestMove('X')
+                game.makeMoveAI(index)
     else:
+        print("O PLAYER")
         if game.oplayer:
             game.humanTurn('O')
             #game.checkChildScores()
         else:
-            pass
-
+            minimax = Minimax(game.tree)
+            index = minimax.findBestMove('O')
+            #game.aiTurn('O', index)
+            game.makeMoveAI(index)
+            
+    print(game.tree.root.data)
+    firstTurn = False
     if game.checkEndGame():
         game.gameover = True
     game.xturn = not game.xturn
     #game.gameover = True #testing
 
-print(game.tree.root.data)
+#print(game.tree.root.data)
 print("GAME OVER MAN!")
     
 """

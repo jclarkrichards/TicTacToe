@@ -6,8 +6,9 @@ class GameState(object):
     def __init__(self, state):
         '''state is a list'''
         self.state = state
-        self.score = 0
-        self.depth = 0
+        self.winner = None #can also be 'X' or 'O'
+        #self.score = 0
+        #self.depth = 0
         
     def __eq__(self, state):
         #print(state)
@@ -48,6 +49,13 @@ class GameState(object):
                 return True
         return False
 
+    def setWinner(self, filters):
+        '''Return the winner of this state: 'X' or 'O' or None if tie or no winners'''
+        if self.winnerX(filters):
+            self.winner = 'X'
+        elif self.winnerO(filters):
+            self.winner = 'O'
+        
     def isWinner(self, symbol, f):
         '''Use the filters to check for a winner'''
         vals = [k for i, k in enumerate(self.state) if f[i] == 1]
