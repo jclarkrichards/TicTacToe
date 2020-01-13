@@ -4,8 +4,11 @@ from copy import deepcopy
 
 class GameState(object):
     def __init__(self, state):
+        '''state is a list'''
         self.state = state
-
+        self.score = 0
+        self.depth = 0
+        
     def __eq__(self, state):
         #print(state)
         #print(state.state)

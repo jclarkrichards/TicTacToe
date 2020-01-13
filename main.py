@@ -4,7 +4,11 @@ from tree import Tree
 
 game = TicTacToe()
 game.setupTree()
-game.checkChildScores()
+#game.checkChildScores()
+
+print("Depth of root: " + str(game.tree.root.data.depth))
+node = game.tree.findNode([0,1,0,1,2,0])
+print("Depth of this node " + str(node.data.depth))
 
 game.xplayer = True #Human is X
 game.oplayer = True #Human is O
@@ -17,13 +21,13 @@ while not game.gameover:
     if game.xturn:
         if game.xplayer:
             game.humanTurn('X')
-            game.checkChildScores()
+            #game.checkChildScores()
         else:
             pass
     else:
         if game.oplayer:
             game.humanTurn('O')
-            game.checkChildScores()
+            #game.checkChildScores()
         else:
             pass
 

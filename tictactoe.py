@@ -44,6 +44,7 @@ class TicTacToe(object):
                     if nodestate[i] == -2:
                         nodestate[i] = -1
                 node.data = GameState(nodestate)
+                node.data.depth = len(node.id)-1 #depth is 0-based
             else:
                 node = node.parent
 

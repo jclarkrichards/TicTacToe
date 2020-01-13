@@ -4,7 +4,7 @@ class TreeNode(object):
         self.id = [] #each Node object is unique
         self.parent = None
         self.children = []
-        self.data = None
+        self.data = None #GameState object
         self.visited = False
         
     def __repr__(self):
@@ -30,7 +30,7 @@ class Tree(object):
         return node
 
     def find(self, data):
-        '''If you have the data instead of the id'''
+        '''If you have the data instead of the id.  Return TreeNode object.'''
         def recurse(node):
             #print(str(data) + ", " + str(node.data))
             if data == node.data:
@@ -66,6 +66,8 @@ class Tree(object):
             #print(node.data)
         return num
 
+    
+    #This will most likely be deleted.  Just for testing...
     def scoreTest(self, filters):
         d = {'X':0, 'O':0, 'TIE':0}
         scores = {'X':{}, 'O':{}}
@@ -142,7 +144,9 @@ class Tree(object):
         node = self.findNode(id)
         if node is not None:
             self.root = node
-            
+            self.root.parent = None
+
+    #set root with data as well instead of id
 """
 #Testing the tree
 print("Tree testing")
