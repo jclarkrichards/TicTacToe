@@ -65,7 +65,63 @@ class Tree(object):
             #print("N: " + str(node))
             #print(node.data)
         return num
-            
+
+    def scoreTest(self, filters):
+        d = {'X':0, 'O':0, 'TIE':0}
+        scores = {'X':{}, 'O':{}}
+        #print(d)
+        def recurse(d, scores, node):
+            #print(d)
+            if len(node.children) == 0: #leaf node (end state)
+                if node.data.winnerX(filters) and not node.data.winnerO(filters):
+                    depth = len(node.id) - len(self.root.id)
+                    if len(scores['X']) == 0:
+                        scores['X'][depth] = 1
+                    else:
+                        if depth in scores['X']:
+                            scores['X'][depth] += 1
+                        else:
+                            if depth < scores['X'].keys()[0]:
+                                scores['X'].pop(scores['X'].keys()[0])
+                                scores['X'][depth] = 1
+                                        
+                    
+                    d['X'] += 1
+                    
+                elif node.data.winnerO(filters) and not node.data.winnerX(filters):
+                    depth = len(node.id) - len(self.root.id)
+                    if len(scores['O']) == 0:
+                        scores['O'][depth] = 1
+                    else:
+                        if depth in scores['O']:
+                            scores['O'][depth] += 1
+                        else:
+                            if depth < scores['O'].keys()[0]:
+                                scores['O'].pop(scores['O'].keys()[0])
+                                scores['O'][depth] = 1
+                                        
+
+                    d['O'] += 1
+
+            else:
+                for n in node.children:
+                    #scores[n.id] = {}
+                    recurse(d, scores, n)
+                    
+                    if node is self.root:
+                        print("")
+                        print("Results for " + str(n.id))
+                        #print(d)
+                        #print(str(d['X'] - d['O']))
+                        d = {'X':0, 'O':0, 'TIE':0}
+                        print(scores)
+                        #print(str(scores['X'] - scores['O']))
+                        scores = {'X':{}, 'O':{}}
+        #print(d)
+        recurse(d, scores, self.root)
+        
+        #return recurse(self.root)
+    
     def isLeaf(self, id):
         '''Check if the node with the given id is a leaf or not'''
         node = self.findNode(id)

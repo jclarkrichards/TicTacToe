@@ -4,6 +4,7 @@ from tree import Tree
 
 game = TicTacToe()
 game.setupTree()
+game.checkChildScores()
 
 game.xplayer = True #Human is X
 game.oplayer = True #Human is O
@@ -16,11 +17,13 @@ while not game.gameover:
     if game.xturn:
         if game.xplayer:
             game.humanTurn('X')
+            game.checkChildScores()
         else:
             pass
     else:
         if game.oplayer:
             game.humanTurn('O')
+            game.checkChildScores()
         else:
             pass
 

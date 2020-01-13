@@ -72,3 +72,10 @@ class TicTacToe(object):
         data.setData(symbol, index)
         node = self.tree.find(data)
         self.tree.setRoot(node.id)
+
+    def checkChildScores(self):
+        '''What are the scores for the children of root?'''
+        #d = {'X':0, 'O':0, 'BOTH':0}
+        print("Checking child scores...")
+        self.tree.scoreTest(filters())
+        

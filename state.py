@@ -45,6 +45,28 @@ class GameState(object):
                 return True
         return False
 
+    def isWinner(self, symbol, f):
+        '''Use the filters to check for a winner'''
+        vals = [k for i, k in enumerate(self.state) if f[i] == 1]
+        vals = list(set(vals))
+        if len(vals) == 1:
+            if vals[0] == symbol:
+                return True
+        return False
+
+    def winnerX(self, filters):
+        '''Check if "X" is the winner of this state'''
+        for f in filters:
+            if self.isWinner('X', f):
+                return True
+        return False
+
+    def winnerO(self, filters):
+        for f in filters:
+            if self.isWinner('O', f):
+                return True
+        return False
+    
     def filter(self, f):
         '''Pass in a filter and apply it to the state.  Return True or False.'''
         vals = [k for i, k in enumerate(self.state) if f[i] == 1]
@@ -60,6 +82,7 @@ class GameState(object):
             self.state[index] = val
             return True
         return False
+
     
 class StateTemplate(object):
     def __init__(self, state):
