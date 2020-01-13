@@ -74,20 +74,20 @@ class TicTacToe(object):
             node = self.tree.find(data)
             self.tree.setRoot(node.id)
 
-    def aiTurn(self, symbol, index):
-        '''The ai at this point has chosen the best path as given by the index'''
-        data = self.tree.root.data.copy() #get a copy of root GameState
-        #data.setData(symbol, index)
-        node = self.tree.find(data)
-        self.tree.setRoot(node.id)
+    #def aiTurn(self, symbol, index):
+    #    '''The ai at this point has chosen the best path as given by the index'''
+    #    data = self.tree.root.data.copy() #get a copy of root GameState
+    #    #data.setData(symbol, index)
+    #    node = self.tree.find(data)
+    #    self.tree.setRoot(node.id)
 
     def makeMoveAI(self, index):
         node = self.tree.root.children[index]
         self.tree.setRoot(node.id)
 
-    def checkChildScores(self):
-        '''What are the scores for the children of root?'''
-        #d = {'X':0, 'O':0, 'BOTH':0}
-        print("Checking child scores...")
-        self.tree.scoreTest(filters())
+    #def checkChildScores(self):
+    #    '''What are the scores for the children of root?'''
+    #    #d = {'X':0, 'O':0, 'BOTH':0}
+    #    print("Checking child scores...")
+    #    self.tree.scoreTest(filters())
         

@@ -1,5 +1,4 @@
 """State for a Tic Tac Toe game.  Will contain 'X' and 'O' and -1 or -2"""
-#from tictactoe import filters
 from copy import deepcopy
 
 class GameState(object):
@@ -7,12 +6,8 @@ class GameState(object):
         '''state is a list'''
         self.state = state
         self.winner = None #can also be 'X' or 'O'
-        #self.score = 0
-        #self.depth = 0
         
     def __eq__(self, state):
-        #print(state)
-        #print(state.state)
         s1 = []
         s2 = []
         for val in state.state:
@@ -36,7 +31,7 @@ class GameState(object):
                 XO.append(' ')
             else:
                 XO.append(val)
-        return "%s|%s|%s\n- - -\n%s|%s|%s\n- - -\n%s|%s|%s" % tuple(XO)
+        return "%s|%s|%s\n-+-+-\n%s|%s|%s\n-+-+-\n%s|%s|%s" % tuple(XO)
 
     def copy(self):
         '''Return a fresh copy of the state so we can modify it without effecting this one'''
@@ -101,4 +96,4 @@ class StateTemplate(object):
 
     def __repr__(self):
         '''this is specifically for a tic tac toe state'''
-        return "%s|%s|%s\n- - -\n%s|%s|%s\n- - -\n%s|%s|%s" % tuple(self.state)
+        return "%s|%s|%s\n-+-+-\n%s|%s|%s\n-+-+-\n%s|%s|%s" % tuple(self.state)
