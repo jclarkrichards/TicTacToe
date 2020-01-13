@@ -10,10 +10,10 @@ from copy import deepcopy
 #print(num)
 
 
-startState = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+startState = [-1, -1, -1, -1, -1, -1, -1, -1, -1]
 tree = Tree()
 tree.root.data = startState
-def constructTree():
+def constructTree(maxdepth):
    def recurse(node):
       state = deepcopy(node.data)
       numFreeSpots = len([k for k in state if k == -1])
@@ -28,12 +28,12 @@ def constructTree():
          else:
             newstate[index] = 'O'
          newnode = tree.addNode(node, newstate)
-         recurse(newnode)
+         if newnode.depth < maxdepth:
+            recurse(newnode)
            
    recurse(tree.root)
 
-
-constructTree()
+constructTree(4)
 n = tree.walk(0, tree.root)
 print(n)
 """
